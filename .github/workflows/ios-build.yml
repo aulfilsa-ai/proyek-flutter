@@ -1,0 +1,26 @@
+name: iOS Build
+
+on:
+  push:
+    branches: [ main ] # Jalankan setiap kali Anda push ke branch main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.19.0' # Sesuaikan dengan versi Flutter Anda
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build iOS (No Sign)
+        run: flutter build ios --release --no-codesign
+
